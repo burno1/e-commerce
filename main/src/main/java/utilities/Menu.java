@@ -79,7 +79,7 @@ public class Menu {
             System.out.println(question);
 
             while (!sc.hasNextInt()) {
-                System.out.println("That's not a number! Type again");
+                System.out.println("That's not a integer! Type again");
                 sc.next();
             }
             input = sc.nextInt();
@@ -105,7 +105,7 @@ public class Menu {
             System.out.println(question);
 
             while (!sc.hasNextDouble()) {
-                System.out.println("That's not a number! Type again");
+                System.out.println("That's not a double! Type again");
                 sc.next();
             }
             input = sc.nextDouble();

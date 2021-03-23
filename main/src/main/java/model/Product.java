@@ -25,6 +25,9 @@ public class Product {
         this.name = name;
     }
 
+    /**
+     * Builder used to instantiate a product in a smart way
+     */
     public static class Builder {
         private final String name;
         private String description;

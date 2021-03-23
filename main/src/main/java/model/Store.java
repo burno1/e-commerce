@@ -11,8 +11,10 @@ import java.util.*;
 public class Store {
     private HashMap<Integer, Product> products = new HashMap<>();
 
+
     /**
-     * Adds a new product to the set
+     * Add a new product
+      * @param product product to be added to the structure
      */
     public void addProduct(Product product) {
         try {
@@ -31,14 +33,18 @@ public class Store {
 
 
     /**
-     * List products
+     * list all products
+      * @return products in storage
      */
     public List<Product> listProducts() {
         return new ArrayList<>(products.values());
     }
 
+
     /**
-     * search for a product using the name prompted
+     * search for a product
+     * @param name name of the wanted product
+     * @return the product if exists
      */
     public Product search(String name) {
 
