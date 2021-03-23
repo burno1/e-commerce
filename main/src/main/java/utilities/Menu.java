@@ -130,12 +130,17 @@ public class Menu {
                 System.out.println((i + 1) + " - " + this.options.get(i));
             }
 
-            if (sc.hasNextInt())
-                choice = sc.nextInt();
 
-            if (MenuOptionEnum.EXIT == MenuOptionEnum.valueOf(this.options.get(choice - 1))) return;
+            while (!sc.hasNextInt()) {
+                System.out.println("That's not a number! Type again");
+                sc.next();
+            }
+            choice = sc.nextInt();
+
 
             if (choice > 0 && (choice - 1) < this.options.size()) {
+                if (MenuOptionEnum.EXIT == MenuOptionEnum.valueOf(this.options.get(choice - 1))) return;
+
                 verifyUserEntry(MenuOptionEnum.valueOf(this.options.get(choice - 1)));
             } else {
                 System.out.println("Option unavailable");

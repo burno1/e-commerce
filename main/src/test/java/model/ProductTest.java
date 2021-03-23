@@ -46,4 +46,19 @@ class ProductTest {
     void testToString() {
         assertNotEquals("",product.toString());
     }
+
+    @DisplayName(value = "test equals")
+    @Test
+    void testEquals() {
+
+        Product productEqual = new Product
+                .Builder("name")
+                .price(1)
+                .description("description")
+                .quantity(123)
+                .category("category")
+                .build();
+
+        assertEquals(productEqual,product);
+    }
 }
