@@ -130,13 +130,11 @@ public class Menu {
                 System.out.println((i + 1) + " - " + this.options.get(i));
             }
 
-
             while (!sc.hasNextInt()) {
                 System.out.println("That's not a number! Type again");
                 sc.next();
             }
             choice = sc.nextInt();
-
 
             if (choice > 0 && (choice - 1) < this.options.size()) {
                 if (MenuOptionEnum.EXIT == MenuOptionEnum.valueOf(this.options.get(choice - 1))) return;
@@ -154,34 +152,30 @@ public class Menu {
      * @param entry enum passed to method
      */
     public void verifyUserEntry(MenuOptionEnum entry) {
-        switch (entry) {
-            case ADD:
-                Product readProduct = readProduct();
-                store.addProduct(readProduct);
-                break;
-            case LIST:
-                if (store.listProducts().size() == 0) {
-                    System.out.println("No products to show");
+        try {
+            switch (entry) {
+                case ADD:
+                    Product readProduct = readProduct();
+                    store.addProduct(readProduct);
                     break;
-                }
-                store.listProducts().forEach(System.out::println);
-                break;
-            case SEARCH:
-                String name = Menu.prompt("Type the name of the product");
-                Product product;
-
-                try {
+                case LIST:
+                    if (store.listProducts().size() == 0) {
+                        System.out.println("No products to show");
+                        break;
+                    }
+                    store.listProducts().forEach(System.out::println);
+                    break;
+                case SEARCH:
+                    Product product;
+                    String name = Menu.prompt("Type the name of the product");
                     product = store.search(name);
-                    System.out.println("name= " + product.getName() +
-                                        " price= " + product.getPrice() +
-                                        " description= " + product.getDescription());
-                } catch (ObjectNotFoundException e) {
-                    System.out.println(e.getMessage());
+                    System.out.println(product.customPrint());
                     break;
-                }
-                break;
-            case EXIT:
-                break;
+                default:
+                    break;
+            }
+        } catch (ObjectNotFoundException e) {
+            System.out.println(e.getMessage());
         }
     }
 

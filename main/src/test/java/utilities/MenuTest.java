@@ -144,4 +144,18 @@ class MenuTest {
             menu.spawnMenu();
         });
     }
+
+    @DisplayName(value = "Spawn menu test with string not available")
+    @Test
+    void spawnMenuOptString() {
+
+        ByteArrayInputStream in = new ByteArrayInputStream(("asd").getBytes());
+        System.setIn(in);
+
+        assertDoesNotThrow(()-> {
+            ByteArrayInputStream in2 = new ByteArrayInputStream(("4").getBytes());
+            System.setIn(in2);
+            menu.spawnMenu();
+        });
+    }
 }

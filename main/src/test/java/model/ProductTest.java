@@ -61,4 +61,10 @@ class ProductTest {
 
         assertEquals(productEqual,product);
     }
+
+    @DisplayName(value = "Test the custom to String")
+    @Test
+    void customToString() {
+        assertNotEquals("",product.customPrint());
+    }
 }

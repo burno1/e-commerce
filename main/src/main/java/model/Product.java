@@ -103,4 +103,11 @@ public class Product {
                 ","+ category +
                 '}';
     }
+
+    public String customPrint(){
+       return "name=" + name +
+                " price=" + price +
+                " description=" + description;
+    }
+
 }
