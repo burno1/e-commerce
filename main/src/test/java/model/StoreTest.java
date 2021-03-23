@@ -66,6 +66,13 @@ class StoreTest {
         assertThrows(ObjectNotFoundException.class, () -> store.search("produto1"));
     }
 
+    @DisplayName(value = "Test searching the list of products throwing exception")
+    @Test
+    void searchListException(){
+        Store store = new Store();
+        assertThrows(ObjectNotFoundException.class, store::listProducts);
+    }
+
     @DisplayName(value = "Test adding the products throwing exception")
     @Test
     void addException(){

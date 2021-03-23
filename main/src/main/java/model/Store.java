@@ -37,6 +37,9 @@ public class Store {
       * @return products in storage
      */
     public List<Product> listProducts() {
+        if(products.size() == 0){
+            throw new ObjectNotFoundException("No products to show");
+        }
         return new ArrayList<>(products.values());
     }
 

@@ -159,17 +159,11 @@ public class Menu {
                     store.addProduct(readProduct);
                     break;
                 case LIST:
-                    if (store.listProducts().size() == 0) {
-                        System.out.println("No products to show");
-                        break;
-                    }
                     store.listProducts().forEach(System.out::println);
                     break;
                 case SEARCH:
-                    Product product;
                     String name = Menu.prompt("Type the name of the product");
-                    product = store.search(name);
-                    System.out.println(product.customPrint());
+                    System.out.println(store.search(name).customPrint());
                     break;
                 default:
                     break;
