@@ -1,5 +1,5 @@
 import enums.MenuOptionEnum;
-import utilities.Menu;
+import view.Menu;
 
 import java.util.*;
 import java.util.stream.Collectors;

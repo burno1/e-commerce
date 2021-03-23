@@ -1,4 +1,4 @@
-package utilities;
+package view;
 
 import enums.MenuOptionEnum;
 import org.junit.jupiter.api.BeforeEach;
