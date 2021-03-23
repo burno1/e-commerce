@@ -5,9 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -37,9 +35,7 @@ class MenuTest {
         ByteArrayInputStream in = new ByteArrayInputStream(("4").getBytes());
         System.setIn(in);
 
-        assertDoesNotThrow(() -> {
-            menu.spawnMenu();
-        });
+        assertDoesNotThrow(() -> menu.spawnMenu());
     }
 
     @DisplayName(value = "User String entry test")

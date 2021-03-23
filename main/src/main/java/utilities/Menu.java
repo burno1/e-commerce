@@ -52,14 +52,14 @@ public class Menu {
      */
     public static String prompt(String question) {
         final Scanner sc = new Scanner(System.in);
-        String input = "";
+        String input;
 
         do {
             System.out.println();
             System.out.println(question);
             input = sc.nextLine();
 
-        } while (input == "");
+        } while (input.equals(""));
 
         return input;
     }
@@ -72,7 +72,7 @@ public class Menu {
      */
     public static int promptInt(String question, int min) {
         final Scanner sc = new Scanner(System.in);
-        int input = 0;
+        int input;
 
         do {
             System.out.println();
@@ -98,7 +98,7 @@ public class Menu {
      */
     public static double promptDouble(String question, double min) {
         final Scanner sc = new Scanner(System.in);
-        double input = 0;
+        double input;
 
         do {
             System.out.println();
@@ -123,7 +123,7 @@ public class Menu {
         int choice = 0;
 
         System.out.println('\n' + this.title);
-        this.description.ifPresent(s -> System.out.println(s));
+        this.description.ifPresent(System.out::println);
 
         do {
             for (int i = 0; i < this.options.size(); i++) {
@@ -163,7 +163,7 @@ public class Menu {
                 break;
             case SEARCH:
                 String name = Menu.prompt("Type the name of the product");
-                Product product = null;
+                Product product;
 
                 try {
                     product = store.search(name);
@@ -190,14 +190,12 @@ public class Menu {
         int quantity = Menu.promptInt("What is the product quantity", 0);
         String category = Menu.prompt("What is the product category?");
 
-        Product product = new Product
+        return new Product
                 .Builder(name)
                 .price(price)
                 .description(description)
                 .quantity(quantity)
                 .category(category)
                 .build();
-
-        return product;
     }
 }

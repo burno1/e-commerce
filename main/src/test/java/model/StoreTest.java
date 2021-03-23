@@ -6,9 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -66,17 +63,13 @@ class StoreTest {
     @DisplayName(value = "Test searching the products throwing exception")
     @Test
     void searchException(){
-        assertThrows(ObjectNotFoundException.class, () -> {
-            store.search("produto1");
-        });
+        assertThrows(ObjectNotFoundException.class, () -> store.search("produto1"));
     }
 
     @DisplayName(value = "Test adding the products throwing exception")
     @Test
     void addException(){
-        assertThrows(NullPointerException.class, () -> {
-            store.addProduct(null);
-        });
+        assertThrows(NullPointerException.class, () -> store.addProduct(null));
     }
 
 }

@@ -19,9 +19,7 @@ class MainTest {
         System.setIn(in);
 
 
-        assertDoesNotThrow(() -> {
-            Main.main(null);
-        });
+        assertDoesNotThrow(() -> Main.main(null));
 
     }
 }

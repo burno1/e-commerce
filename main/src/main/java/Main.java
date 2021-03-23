@@ -1,5 +1,4 @@
 import enums.MenuOptionEnum;
-import model.Product;
 import utilities.Menu;
 
 import java.util.*;
@@ -11,7 +10,6 @@ import java.util.stream.Stream;
  * Created at : 22/03/2021
  */
 public class Main {
-    public static HashMap<Integer, Product> products = new HashMap<>();
     public static void main(String[] args){
 
         List<String> enumNames = Stream.of(MenuOptionEnum.values())

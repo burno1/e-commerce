@@ -1,7 +1,5 @@
 package exception;
 
-import java.io.Serializable;
-
 /**
  * Author: Bruno Fernandes
  * Created at : 22/03/2021
