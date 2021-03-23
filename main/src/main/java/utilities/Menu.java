@@ -15,23 +15,26 @@ import java.util.Scanner;
  */
 public class Menu {
 
-    Store store = new Store();
-
-    /** Title of the menu */
+    /**
+     * Title of the menu
+     */
     private final String title;
-
-    /** Optional description of the menu */
+    /**
+     * Optional description of the menu
+     */
     private final Optional<String> description;
-
-    /** Collection containing all possible actions */
+    /**
+     * Collection containing all possible actions
+     */
     private final List<String> options;
+    private Store store = new Store();
 
     /**
      * @param title       Title of the menu
      * @param description Description of the menu
      * @param options     A list of all possible options
      */
-    public Menu (
+    public Menu(
             final String title,
             final String description,
             final List<String> options
@@ -41,6 +44,76 @@ public class Menu {
         this.options = options;
     }
 
+    /**
+     * A prompt that takes input from standard input
+     *
+     * @param question A question presented to the user
+     * @return A string answer
+     */
+    public static String prompt(String question) {
+        final Scanner sc = new Scanner(System.in);
+        String input = "";
+
+        do {
+            System.out.println();
+            System.out.println(question);
+            input = sc.nextLine();
+
+        } while (input == "");
+
+        return input;
+    }
+
+    /**
+     * A prompt that takes input from standard input
+     *
+     * @param question A question presented to the user
+     * @return An integer answer
+     */
+    public static int promptInt(String question, int min) {
+        final Scanner sc = new Scanner(System.in);
+        int input = 0;
+
+        do {
+            System.out.println();
+            System.out.println(question);
+
+            while (!sc.hasNextInt()) {
+                System.out.println("That's not a number! Type again");
+                sc.next();
+            }
+            input = sc.nextInt();
+
+
+        } while (input < min);
+
+        return input;
+    }
+
+    /**
+     * A prompt that takes input from standard input
+     *
+     * @param question A question presented to the user
+     * @return A double
+     */
+    public static double promptDouble(String question, double min) {
+        final Scanner sc = new Scanner(System.in);
+        double input = 0;
+
+        do {
+            System.out.println();
+            System.out.println(question);
+
+            while (!sc.hasNextDouble()) {
+                System.out.println("That's not a number! Type again");
+                sc.next();
+            }
+            input = sc.nextDouble();
+
+        } while (input < min);
+
+        return input;
+    }
 
     /**
      * Show menu on the console
@@ -60,7 +133,7 @@ public class Menu {
             if (sc.hasNextInt())
                 choice = sc.nextInt();
 
-            if( MenuOptionEnum.EXIT == MenuOptionEnum.valueOf(this.options.get(choice - 1))) return;
+            if (MenuOptionEnum.EXIT == MenuOptionEnum.valueOf(this.options.get(choice - 1))) return;
 
             if (choice > 0 && (choice - 1) < this.options.size()) {
                 verifyUserEntry(MenuOptionEnum.valueOf(this.options.get(choice - 1)));
@@ -70,97 +143,34 @@ public class Menu {
         } while (true);
     }
 
-    /** A prompt that takes input from standard input
-     * @param  question A question presented to the user
-     * @return          A string answer
-     */
-    public static String prompt(String question) {
-        final Scanner sc = new Scanner(System.in);
-        String input = "";
-
-        do {
-            System.out.println();
-            System.out.println(question);
-            input = sc.nextLine();
-
-        } while (input == "");
-
-        return input;
-    }
-
-    /** A prompt that takes input from standard input
-     * @param  question A question presented to the user
-     * @return          An integer answer
-     */
-    public static int promptInt(String question, int min) {
-        final Scanner sc = new Scanner(System.in);
-        int input = 0;
-
-        do {
-            System.out.println();
-            System.out.println(question);
-
-            while (!sc.hasNextInt()) {
-                System.out.println("That's not a number!");
-                sc.next();
-            }
-            input = sc.nextInt();
-
-
-        } while (input < min);
-
-        return input;
-    }
-
-    /** A prompt that takes input from standard input
-     * @param  question A question presented to the user
-     * @return          A double
-     */
-    public static double promptDouble(String question, double min) {
-        final Scanner sc = new Scanner(System.in);
-        double input = 0;
-
-        do {
-            System.out.println();
-            System.out.println(question);
-
-            while (!sc.hasNextDouble()) {
-                System.out.println("That's not a number!");
-                sc.next();
-            }
-            input = sc.nextDouble();
-
-        } while (input < min);
-
-        return input;
-    }
-
-
     /**
      * Verify entry given by the user accordinly to the enum
+     *
      * @param entry enum passed to method
      */
-    public void verifyUserEntry(MenuOptionEnum entry){
-        switch (entry){
+    public void verifyUserEntry(MenuOptionEnum entry) {
+        switch (entry) {
             case ADD:
                 Product readProduct = readProduct();
                 store.addProduct(readProduct);
                 break;
             case LIST:
-                store.listProducts().forEach((integer, product) -> {
-                    System.out.println(product);
-                });
+                if (store.listProducts().size() == 0) {
+                    System.out.println("No products to show");
+                    break;
+                }
+                store.listProducts().forEach(System.out::println);
                 break;
             case SEARCH:
                 String name = Menu.prompt("Type the name of the product");
-                Product product = null; 
+                Product product = null;
 
                 try {
                     product = store.search(name);
-                    System.out.println("name= "+product.getName() +
-                            " price= " + product.getPrice() +
-                            " description= " + product.getDescription());
-                } catch (ObjectNotFoundException e){
+                    System.out.println("name= " + product.getName() +
+                                        " price= " + product.getPrice() +
+                                        " description= " + product.getDescription());
+                } catch (ObjectNotFoundException e) {
                     System.out.println(e.getMessage());
                     break;
                 }
@@ -172,9 +182,8 @@ public class Menu {
 
     /**
      * Read the product in the console input
-     *
      */
-    public Product readProduct(){
+    public Product readProduct() {
         String name = Menu.prompt("What is the product name?");
         double price = Menu.promptDouble("What is the product Price?", 0);
         String description = Menu.prompt("What is the product description?");

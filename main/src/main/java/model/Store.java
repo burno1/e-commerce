@@ -3,8 +3,8 @@ package model;
 import exception.ObjectNotFoundException;
 import utilities.Menu;
 
-import java.util.HashMap;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Author: Bruno Fernandes
@@ -12,7 +12,6 @@ import java.util.Optional;
  */
 public class Store {
     private HashMap<Integer, Product> products = new HashMap<>();
-
 
     /**
      * Adds a new product to the set
@@ -36,9 +35,8 @@ public class Store {
     /**
      * List products
      */
-    public HashMap<Integer, Product> listProducts() {
-        System.out.println("Listando produtos");
-        return products;
+    public List<Product> listProducts() {
+        return new ArrayList<>(products.values());
     }
 
     /**

@@ -9,10 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -54,9 +51,8 @@ class StoreTest {
     @DisplayName(value = "Test the list of products")
     @Test
     void listProducts() {
-        HashMap<Integer, Product> products = new HashMap<>();
-        products.put(product.hashCode(),product);
-
+        List<Product> products = new ArrayList<>();
+        products.add(product);
         assertEquals(products,store.listProducts());
     }
 
