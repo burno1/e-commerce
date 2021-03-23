@@ -18,7 +18,7 @@ public class Product {
         description = builder.description;
         category = builder.category;
         price = builder.price;
-        quantity = 1;
+        quantity = builder.quantity;
     }
 
     public Product(String name) {
@@ -30,6 +30,7 @@ public class Product {
         private String description;
         private double price;
         private Category category;
+        private int quantity;
 
         public Builder (String name){
             this.name = name;
@@ -50,6 +51,11 @@ public class Product {
             return this;
         }
 
+        public Builder quantity(int quantity){
+            this.quantity = quantity;
+            return this;
+        }
+
         public Product build(){
             return new Product(this);
         }
@@ -57,10 +63,6 @@ public class Product {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getQuantity() {
@@ -75,24 +77,8 @@ public class Product {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     @Override
@@ -115,7 +101,7 @@ public class Product {
                 ", quantity=" + quantity +
                 ", price=" + price +
                 ", description='" + description + '\'' +
-                ", category=" + category +
+                ","+ category +
                 '}';
     }
 }

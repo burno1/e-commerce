@@ -1,14 +1,20 @@
 package model;
 
+import exception.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Author: Bruno Fernandes
@@ -16,6 +22,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 class StoreTest {
     static Store store;
+    static Product product;
+
+    @BeforeEach
+    void setUp() {
+        product = new Product
+                .Builder("name")
+                .price(123)
+                .description("description")
+                .quantity(10)
+                .category("category")
+                .build();
+        store.addProduct(product);
+    }
+
     @BeforeAll
     static void beforeAll() {
         store = new Store();
@@ -24,23 +44,43 @@ class StoreTest {
     @DisplayName(value = "Test add product")
     @Test
     void addProduct() {
-        ByteArrayInputStream in = new ByteArrayInputStream("My string".getBytes());
-        System.setIn(in);
-        store.addProduct();
-
-        assertEquals(1, store.getProducts().size());
-
+        try{
+            assertEquals(1, store.getProducts().size());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @DisplayName(value = "Test the list of products")
     @Test
     void listProducts() {
-        assertDoesNotThrow(()->{store.listProducts();});
+        HashMap<Integer, Product> products = new HashMap<>();
+        products.put(product.hashCode(),product);
 
+        assertEquals(products,store.listProducts());
     }
 
     @DisplayName(value = "Test searching the products")
     @Test
     void search() {
+        assertNotNull(store.search("name"));
+
     }
+
+    @DisplayName(value = "Test searching the products throwing exception")
+    @Test
+    void searchException(){
+        assertThrows(ObjectNotFoundException.class, () -> {
+            store.search("produto1");
+        });
+    }
+
+    @DisplayName(value = "Test adding the products throwing exception")
+    @Test
+    void addException(){
+        assertThrows(NullPointerException.class, () -> {
+            store.addProduct(null);
+        });
+    }
+
 }

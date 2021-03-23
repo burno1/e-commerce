@@ -1,8 +1,10 @@
 package model;
 
+import exception.ObjectNotFoundException;
 import utilities.Menu;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 /**
  * Author: Bruno Fernandes
@@ -15,45 +17,45 @@ public class Store {
     /**
      * Adds a new product to the set
      */
-    public void addProduct(){
-        Product product = new Product
-                .Builder(Menu.prompt("What is the product name?"))
-                .price(Menu.promptDouble("What is the product Price?", 0))
-                .build();
+    public void addProduct(Product product) {
+        try {
+            Product productOnStorage = products.get(product.hashCode());
+            if (productOnStorage != null) {
+                product.setQuantity(productOnStorage.getQuantity() + product.getQuantity());
+            }
+            products.put(product.hashCode(), product);
 
-        Product productOnStorage =products.get(product.hashCode());
-        if( productOnStorage!=null ) {
-            product.setQuantity(productOnStorage.getQuantity() + 1);
+            System.out.println("product added successfuly");
+
+        } catch (NullPointerException e) {
+            throw new NullPointerException("Product cannot be null");
         }
-        products.put(product.hashCode(), product);
     }
 
 
     /**
      * List products
      */
-    public void listProducts(){
+    public HashMap<Integer, Product> listProducts() {
         System.out.println("Listando produtos");
-        products.forEach((integer, product) -> {
-            System.out.println(product);
-        });
-
+        return products;
     }
 
     /**
      * search for a product using the name prompted
      */
-    public void search() {
-        String name = Menu.prompt("Type the name of the product");
+    public Product search(String name) {
 
-        System.out.println(products.get(new Product(name).hashCode()));
+        Product product = products.get(new Product(name).hashCode());
+
+        if(product == null){
+            throw new ObjectNotFoundException("Product not found");
+        }
+
+        return product;
     }
 
     public HashMap<Integer, Product> getProducts() {
         return products;
-    }
-
-    public void setProducts(HashMap<Integer, Product> products) {
-        this.products = products;
     }
 }

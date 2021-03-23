@@ -1,6 +1,7 @@
 package utilities;
 
 import enums.MenuOptionEnum;
+import exception.ObjectNotFoundException;
 import model.Product;
 import model.Store;
 
@@ -24,19 +25,6 @@ public class Menu {
 
     /** Collection containing all possible actions */
     private final List<String> options;
-
-    /**
-     * @param title   Title of the menu
-     * @param options A list of all possible options 
-     */
-    public Menu(
-            final String title,
-            final List<String> options
-    ) {
-        this.title = title;
-        this.description = Optional.empty();
-        this.options = options;
-    }
 
     /**
      * @param title       Title of the menu
@@ -79,7 +67,6 @@ public class Menu {
             } else {
                 System.out.println("Option unavailable");
             }
-
         } while (true);
     }
 
@@ -95,6 +82,7 @@ public class Menu {
             System.out.println();
             System.out.println(question);
             input = sc.nextLine();
+
         } while (input == "");
 
         return input;
@@ -104,7 +92,7 @@ public class Menu {
      * @param  question A question presented to the user
      * @return          An integer answer
      */
-    public static int promptInt(String question, int min, int max) {
+    public static int promptInt(String question, int min) {
         final Scanner sc = new Scanner(System.in);
         int input = 0;
 
@@ -112,10 +100,14 @@ public class Menu {
             System.out.println();
             System.out.println(question);
 
-            if (sc.hasNextInt())
-                input = sc.nextInt();
+            while (!sc.hasNextInt()) {
+                System.out.println("That's not a number!");
+                sc.next();
+            }
+            input = sc.nextInt();
 
-        } while (input < min || input > max);
+
+        } while (input < min);
 
         return input;
     }
@@ -132,8 +124,11 @@ public class Menu {
             System.out.println();
             System.out.println(question);
 
-            if (sc.hasNextDouble())
-                input = sc.nextDouble();
+            while (!sc.hasNextDouble()) {
+                System.out.println("That's not a number!");
+                sc.next();
+            }
+            input = sc.nextDouble();
 
         } while (input < min);
 
@@ -148,18 +143,52 @@ public class Menu {
     public void verifyUserEntry(MenuOptionEnum entry){
         switch (entry){
             case ADD:
-                store.addProduct();
+                Product readProduct = readProduct();
+                store.addProduct(readProduct);
                 break;
             case LIST:
-                store.listProducts();
+                store.listProducts().forEach((integer, product) -> {
+                    System.out.println(product);
+                });
                 break;
             case SEARCH:
-                store.search();
+                String name = Menu.prompt("Type the name of the product");
+                Product product = null; 
+
+                try {
+                    product = store.search(name);
+                    System.out.println("name= "+product.getName() +
+                            " price= " + product.getPrice() +
+                            " description= " + product.getDescription());
+                } catch (ObjectNotFoundException e){
+                    System.out.println(e.getMessage());
+                    break;
+                }
                 break;
             case EXIT:
+                break;
         }
     }
 
+    /**
+     * Read the product in the console input
+     *
+     */
+    public Product readProduct(){
+        String name = Menu.prompt("What is the product name?");
+        double price = Menu.promptDouble("What is the product Price?", 0);
+        String description = Menu.prompt("What is the product description?");
+        int quantity = Menu.promptInt("What is the product quantity", 0);
+        String category = Menu.prompt("What is the product category?");
 
+        Product product = new Product
+                .Builder(name)
+                .price(price)
+                .description(description)
+                .quantity(quantity)
+                .category(category)
+                .build();
 
+        return product;
+    }
 }
