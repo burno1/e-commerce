@@ -23,30 +23,6 @@ class ProductTest {
                 .build();
     }
 
-    @DisplayName(value = "get name test")
-    @Test
-    void getName() {
-        assertEquals("name",product.getName());
-    }
-
-    @DisplayName(value = "get price test")
-    @Test
-    void getPrice() {
-        assertEquals(1, product.getPrice());
-    }
-
-    @DisplayName(value = "get description test")
-    @Test
-    void getDescription() {
-        assertEquals("description", product.getDescription());
-    }
-
-    @DisplayName(value = "toString test")
-    @Test
-    void testToString() {
-        assertNotEquals("",product.toString());
-    }
-
     @DisplayName(value = "test equals")
     @Test
     void testEquals() {

@@ -12,11 +12,6 @@ import java.util.*;
 public class ProductService {
     private HashMap<Integer, Product> products = new HashMap<>();
 
-
-    /**
-     * Add a new product
-      * @param product product to be added to the structure
-     */
     public void addProduct(Product product) {
         try {
             Product productOnStorage = products.get(product.hashCode());
@@ -32,11 +27,6 @@ public class ProductService {
         }
     }
 
-
-    /**
-     * list all products
-      * @return products in storage
-     */
     public List<Product> listProducts() {
         if(products.size() == 0){
             throw new ObjectNotFoundException("No products to show");
@@ -44,14 +34,7 @@ public class ProductService {
         return new ArrayList<>(products.values());
     }
 
-
-    /**
-     * search for a product
-     * @param name name of the wanted product
-     * @return the product if exists
-     */
     public Product search(String name) {
-
         Product product = products.get(new Product(name).hashCode());
 
         if(product == null){

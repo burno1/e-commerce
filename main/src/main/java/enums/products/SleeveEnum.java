@@ -1,9 +1,9 @@
-package enums;
+package enums.products;
 
 /**
  * Author: Bruno Fernandes
  * Created at : 31/03/2021
  */
-public enum GenderEnum {
-    M,F,U
+public enum SleeveEnum {
+    S,L
 }

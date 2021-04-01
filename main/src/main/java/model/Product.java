@@ -28,9 +28,6 @@ public class Product {
         this.name = name;
     }
 
-    /**
-     * Builder used to instantiate a product in a smart way
-     */
     public static class Builder {
         private final String name;
         private String description;
@@ -73,10 +70,6 @@ public class Product {
         }
     }
 
-    public String getName() {
-        return name;
-    }
-
     public int getQuantity() {
         return quantity;
     }
@@ -85,13 +78,6 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public String getDescription() {
-        return description;
-    }
 
     @Override
     public boolean equals(Object o) {

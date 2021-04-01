@@ -1,8 +1,8 @@
 package model.variants;
 
-import enums.GenderEnum;
-import enums.ShirtSizeEnum;
-import enums.SleeveEnum;
+import enums.products.GenderEnum;
+import enums.products.ShirtSizeEnum;
+import enums.products.SleeveEnum;
 import model.Product;
 
 /**

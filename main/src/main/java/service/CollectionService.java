@@ -45,7 +45,6 @@ public class CollectionService {
         } catch (NullPointerException e) {
             throw new NullPointerException("Collection cannot be null");
         }
-
     }
     /**
      * list all collections

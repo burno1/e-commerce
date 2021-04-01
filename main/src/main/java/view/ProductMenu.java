@@ -88,7 +88,7 @@ public class ProductMenu extends Menu<ProductMenuOptionsEnum> {
                     break;
                 case SEARCH:
                   String name = Menu.prompt("Type the name of the product");
-                    System.out.println(productService.search(name).customPrint());
+                  System.out.println(productService.search(name).customPrint());
                 break;
                 default:
                     break;
