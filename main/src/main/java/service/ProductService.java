@@ -1,6 +1,7 @@
-package model;
+package service;
 
 import exception.ObjectNotFoundException;
+import model.Product;
 
 import java.util.*;
 
@@ -8,7 +9,7 @@ import java.util.*;
  * Author: Bruno Fernandes
  * Created at : 22/03/2021
  */
-public class Store {
+public class ProductService {
     private HashMap<Integer, Product> products = new HashMap<>();
 
 

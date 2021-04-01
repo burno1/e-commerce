@@ -1,5 +1,6 @@
 package model;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -8,17 +9,19 @@ import java.util.Objects;
  */
 public class Product {
     private String name;
+    private String description;
+    private String collection;
+    private List<Image> images;
     private int quantity;
     private double price;
-    private String description;
-    private Category category;
 
     public Product(Builder builder) {
         name = builder.name;
         description = builder.description;
-        category = builder.category;
+        collection = builder.collection;
         price = builder.price;
         quantity = builder.quantity;
+        images = builder.images;
     }
 
     public Product(String name) {
@@ -31,8 +34,9 @@ public class Product {
     public static class Builder {
         private final String name;
         private String description;
+        private List<Image> images;
+        private String collection;
         private double price;
-        private Category category;
         private int quantity;
 
         public Builder (String name){
@@ -49,13 +53,18 @@ public class Product {
             return this;
         }
 
-        public Builder category(String categoryName){
-            this.category = new Category(categoryName);
+        public Builder collection(String collection){
+            this.collection = collection;
             return this;
         }
 
         public Builder quantity(int quantity){
             this.quantity = quantity;
+            return this;
+        }
+
+        public Builder images(List<Image> images){
+            this.images = images;
             return this;
         }
 
@@ -103,7 +112,7 @@ public class Product {
                 ", quantity=" + quantity +
                 ", price=" + price +
                 ", description='" + description + '\'' +
-                ","+ category +
+                ","+ collection +
                 '}';
     }
 

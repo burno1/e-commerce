@@ -1,10 +1,5 @@
 package view;
 
-import enums.MenuOptionEnum;
-import exception.ObjectNotFoundException;
-import model.Product;
-import model.Store;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -13,21 +8,11 @@ import java.util.Scanner;
  * Author: Bruno Fernandes
  * Created at : 22/03/2021
  */
-public class Menu {
+public abstract class Menu<T> {
 
-    /**
-     * Title of the menu
-     */
-    private final String title;
-    /**
-     * Optional description of the menu
-     */
-    private final Optional<String> description;
-    /**
-     * Collection containing all possible actions
-     */
-    private final List<String> options;
-    private Store store = new Store();
+    protected String title;
+    protected Optional<String> description;
+    protected List<String> options;
 
     /**
      * @param title       Title of the menu
@@ -118,77 +103,13 @@ public class Menu {
     /**
      * Show menu on the console
      */
-    public void spawnMenu() {
-        final Scanner sc = new Scanner(System.in);
-        int choice = 0;
+    public abstract void spawnMenu();
 
-        System.out.println('\n' + this.title);
-        this.description.ifPresent(System.out::println);
-
-        do {
-            for (int i = 0; i < this.options.size(); i++) {
-                System.out.println((i + 1) + " - " + this.options.get(i));
-            }
-
-            while (!sc.hasNextInt()) {
-                System.out.println("That's not a number! Type again");
-                sc.next();
-            }
-            choice = sc.nextInt();
-
-            if (choice > 0 && (choice - 1) < this.options.size()) {
-                if (MenuOptionEnum.EXIT == MenuOptionEnum.valueOf(this.options.get(choice - 1))) return;
-
-                verifyUserEntry(MenuOptionEnum.valueOf(this.options.get(choice - 1)));
-            } else {
-                System.out.println("Option unavailable");
-            }
-        } while (true);
-    }
 
     /**
      * Verify entry given by the user accordinly to the enum
-     *
-     * @param entry enum passed to method
      */
-    public void verifyUserEntry(MenuOptionEnum entry) {
-        try {
-            switch (entry) {
-                case ADD:
-                    Product readProduct = readProduct();
-                    store.addProduct(readProduct);
-                    break;
-                case LIST:
-                    store.listProducts().forEach(System.out::println);
-                    break;
-                case SEARCH:
-                    String name = Menu.prompt("Type the name of the product");
-                    System.out.println(store.search(name).customPrint());
-                    break;
-                default:
-                    break;
-            }
-        } catch (ObjectNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+    public abstract void verifyUserEntry(T entry);
 
-    /**
-     * Read the product in the console input
-     */
-    public Product readProduct() {
-        String name = Menu.prompt("What is the product name?");
-        double price = Menu.promptDouble("What is the product Price?", 0);
-        String description = Menu.prompt("What is the product description?");
-        int quantity = Menu.promptInt("What is the product quantity", 0);
-        String category = Menu.prompt("What is the product category?");
 
-        return new Product
-                .Builder(name)
-                .price(price)
-                .description(description)
-                .quantity(quantity)
-                .category(category)
-                .build();
-    }
 }

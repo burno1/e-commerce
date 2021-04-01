@@ -19,7 +19,7 @@ class ProductTest {
                 .price(1)
                 .description("description")
                 .quantity(123)
-                .category("category")
+                .collection("category")
                 .build();
     }
 
@@ -56,7 +56,7 @@ class ProductTest {
                 .price(1)
                 .description("description")
                 .quantity(123)
-                .category("category")
+                .collection("category")
                 .build();
 
         assertEquals(productEqual,product);
