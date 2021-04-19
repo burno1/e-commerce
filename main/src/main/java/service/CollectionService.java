@@ -2,10 +2,7 @@ package service;
 
 import exception.ObjectNotFoundException;
 import model.Collection;
-import model.MainCollection;
 import model.Product;
-import model.SubCollection;
-import sun.tools.jar.Main;
 
 import java.util.*;
 
@@ -14,44 +11,43 @@ import java.util.*;
  * Created at : 31/03/2021
  */
 public class CollectionService {
-    private Map<Integer, MainCollection> collections = new HashMap<>();
+    private Map<Integer, Collection<Collection<Product>>> collections = new HashMap<>();
 
-    /**
-     * Add a new product
-     * @param collection product to be added to the structure
-     */
-    public void addMainCollection(MainCollection collection) {
+
+    public void addMainCollection(Collection<Collection<Product>> collection) {
         try {
-            collections.put(collection.hashCode(), collection);
+            collections.putIfAbsent(collection.hashCode(), collection);
 
-            System.out.println("product added successfuly");
+            System.out.println("collection added successfuly");
 
         } catch (NullPointerException e) {
             throw new NullPointerException("Collection cannot be null");
         }
     }
 
-    public void addSubCollection(SubCollection subCollection){
+    public void addSubCollection(Collection<Product> subCollection) {
         try {
-            MainCollection mainCollection = collections.get(new MainCollection(subCollection.getParentName()).hashCode());
+            Collection<Collection<Product>> collection = collections.get(new Collection<Collection<Product>>(subCollection
+                                                                                                    .getParentName())
+                                                                                                    .hashCode());
 
-            if ((mainCollection.getSubCollections() != null)) {
-                mainCollection.getSubCollections().add(subCollection);
-            } else {
-                mainCollection.setSubCollections(Arrays.asList(subCollection));
+            if ( collection != null ){
+                if (collection.getSubCollection() != null && !collection.getSubCollection().isEmpty()) {
+                    collection.getSubCollection().add(subCollection);
+                } else {
+                    collection.setSubCollection(Arrays.asList(subCollection));
+                }
             }
-            collections.put(mainCollection.hashCode(), mainCollection);
 
+            collections.put(collection.hashCode(), collection);
+            System.out.println("collection added successfuly");
         } catch (NullPointerException e) {
-            throw new NullPointerException("Collection cannot be null");
+            throw new NullPointerException("Error adding new subcollection");
         }
     }
-    /**
-     * list all collections
-     * @return collections in storage
-     */
-    public List<MainCollection> listCollections() {
-        if(collections.size() == 0){
+
+    public List<Collection> listCollections() {
+        if (collections.size() == 0) {
             throw new ObjectNotFoundException("No products to show");
         }
         return new ArrayList<>(collections.values());

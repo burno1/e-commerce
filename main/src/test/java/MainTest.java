@@ -2,6 +2,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,7 +20,7 @@ class MainTest {
         System.setIn(in);
 
 
-        assertDoesNotThrow(() -> Main.main(null));
+        assertThrows(NoSuchElementException.class,() -> Main.main(null));
 
     }
 }

@@ -1,8 +1,7 @@
 package view;
 
 import enums.menu.CollectionsOptionsEnum;
-import enums.menu.MainMenuOptionEnum;
-import model.MainCollection;
+import model.Collection;
 import model.Product;
 import service.CollectionService;
 
@@ -59,10 +58,12 @@ public class CollectionMenu extends Menu<CollectionsOptionsEnum> {
     public void verifyUserEntry(CollectionsOptionsEnum entry) {
         switch (entry){
             case ADD:
-                collectionService.addMainCollection(readCollection());
+                collectionService.addMainCollection(new Collection<Collection<Product>>("collection",
+                                                                                    "desc",
+                                                                                                new ArrayList<>()));
                 break;
             case ADD_SUB:
-                System.out.println("ADD_SUB");
+                collectionService.addSubCollection(readSubCollection());
                 break;
             case LIST:
                 collectionService.listCollections().forEach(System.out::println);
@@ -79,11 +80,29 @@ public class CollectionMenu extends Menu<CollectionsOptionsEnum> {
 
     }
 
-    private MainCollection readCollection() {
+    private Collection readCollection() {
         String name = Menu.prompt("What is the collection name?");
-        String description = Menu.prompt("What is the collection name?");
+        String description = Menu.prompt("What is the collection description?");
 
         System.out.println("Write keywords for the collection, press '0' to end");
+        List<String> keywords = readKeywords();
+
+        return new Collection<Collection<Product>>(name,description,keywords);
+    }
+
+    private Collection readSubCollection() {
+        String parentName = Menu.prompt("What is the parent collection name?");
+        String name = Menu.prompt("What is the collection name?");
+        String description = Menu.prompt("What is the collection description?");
+
+        System.out.println("Write keywords for the collection, press '0' to end");
+        List<String> keywords = readKeywords();
+
+
+        return new Collection<Product>(name,description,keywords,parentName);
+    }
+
+    private List<String> readKeywords(){
         List<String> keywords = new ArrayList<>();
         final Scanner sc = new Scanner(System.in);
         String input;
@@ -94,6 +113,6 @@ public class CollectionMenu extends Menu<CollectionsOptionsEnum> {
             System.out.println(keywords.size());
         } while (!"0".equals(input) && keywords.size() != 5);
 
-        return new MainCollection(name,description,keywords);
+        return keywords;
     }
 }
