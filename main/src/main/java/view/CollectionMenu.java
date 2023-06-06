@@ -27,7 +27,7 @@ public class CollectionMenu extends Menu<CollectionsOptionsEnum> {
     @Override
     public void spawnMenu() {
         final Scanner sc = new Scanner(System.in);
-        int choice = 0;
+        int choice;
 
         System.out.println('\n' + this.title);
 
@@ -58,9 +58,9 @@ public class CollectionMenu extends Menu<CollectionsOptionsEnum> {
     public void verifyUserEntry(CollectionsOptionsEnum entry) {
         switch (entry){
             case ADD:
-                collectionService.addMainCollection(new Collection<Collection<Product>>("collection",
-                                                                                    "desc",
-                                                                                                new ArrayList<>()));
+                collectionService.addMainCollection(new Collection<>("collection",
+                                                                    "desc",
+                                                                        new ArrayList<>()));
                 break;
             case ADD_SUB:
                 collectionService.addSubCollection(readSubCollection());

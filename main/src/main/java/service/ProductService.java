@@ -20,7 +20,7 @@ public class ProductService {
             }
             products.put(product.hashCode(), product);
 
-            System.out.println("product added successfuly");
+            System.out.println("product added");
 
         } catch (NullPointerException e) {
             throw new NullPointerException("Product cannot be null");
